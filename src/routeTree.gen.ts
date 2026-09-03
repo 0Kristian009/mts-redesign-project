@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FotogaleriaRouteImport } from './routes/fotogaleria'
+import { Route as KontaktRouteImport } from './routes/kontakt'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FotogaleriaRoute = FotogaleriaRouteImport.update({
+  id: '/fotogaleria',
+  path: '/fotogaleria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KontaktRoute = KontaktRouteImport.update({
+  id: '/kontakt',
+  path: '/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/fotogaleria': typeof FotogaleriaRoute
+  '/kontakt': typeof KontaktRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/fotogaleria': typeof FotogaleriaRoute
+  '/kontakt': typeof KontaktRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/fotogaleria': typeof FotogaleriaRoute
+  '/kontakt': typeof KontaktRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/fotogaleria' | '/kontakt'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/fotogaleria' | '/kontakt'
+  id: '__root__' | '/' | '/fotogaleria' | '/kontakt'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FotogaleriaRoute: typeof FotogaleriaRoute
+  KontaktRoute: typeof KontaktRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fotogaleria': {
+      id: '/fotogaleria'
+      path: '/fotogaleria'
+      fullPath: '/fotogaleria'
+      preLoaderRoute: typeof FotogaleriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontakt': {
+      id: '/kontakt'
+      path: '/kontakt'
+      fullPath: '/kontakt'
+      preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FotogaleriaRoute: FotogaleriaRoute,
+  KontaktRoute: KontaktRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
